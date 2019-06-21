@@ -37,7 +37,7 @@ def azureEnvironment(String task) {
         docker.withRegistry("https://oejenkinscidockerregistry.azurecr.io", "oejenkinscidockerregistry") {
             def image = docker.image("oetools-deploy:latest")
             image.pull()
-            image.inside {
+            image.inside("-u 0") {
                 sh """#!/usr/bin/env bash
                       set -o errexit
                       set -o pipefail
