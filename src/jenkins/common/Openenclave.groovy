@@ -18,7 +18,7 @@ String dockerImage(String tag, String dockerfile = ".jenkins/Dockerfile", String
 
 def ContainerRun(String imageName, String compiler, String task, String runArgs="") {
     docker.withRegistry("https://oejenkinscidockerregistry.azurecr.io", "oejenkinscidockerregistry") {
-        def image = docker.image("${imageName}:latest")
+        def image = docker.image("${imageName}:terraform")
         image.pull()
         image.inside(runArgs) {
             dir("${WORKSPACE}/build") {
@@ -28,7 +28,7 @@ def ContainerRun(String imageName, String compiler, String task, String runArgs=
     }
 }
 
-def azureEnvironment(String task, String imageName = "oetools-deploy:latest") {
+def azureEnvironment(String task, String imageName = "oetools-deploy:terraform") {
     withCredentials([usernamePassword(credentialsId: 'SERVICE_PRINCIPAL_OSTCLAB',
                                       passwordVariable: 'SERVICE_PRINCIPAL_PASSWORD',
                                       usernameVariable: 'SERVICE_PRINCIPAL_ID'),
